@@ -1,1 +1,1 @@
-# flask-stock-portfolio-app
+Stock Portfolio Application built using Flask Web Framework
