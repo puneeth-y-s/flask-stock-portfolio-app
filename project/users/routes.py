@@ -1,5 +1,9 @@
-from flask import flash, render_template
+from flask import flash, render_template, abort
 from . import users_blueprint
+
+@users_blueprint.route('/admin')
+def admin():
+    abort(403)
 
 @users_blueprint.route("/about")
 def about():

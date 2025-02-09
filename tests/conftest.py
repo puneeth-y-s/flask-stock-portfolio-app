@@ -1,5 +1,5 @@
-import os
 import pytest
+import os
 from project import create_app
 from flask import current_app, request
 

@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from logging.handlers import RotatingFileHandler
 import logging
 from flask.logging import default_handler
@@ -9,10 +9,11 @@ import os
 #     def app_before_request():
 #         app.logger.info('Calling before_request() for the Flask application...')
 
-#     @app.after_request
-#     def app_after_request(response):
-#         app.logger.info('Calling after_request() for the Flask application...')
-#         return response
+    # @app.after_request
+    # def app_after_request(response):
+    #     app.logger.info(f"response header will be {response.headers}")
+    #     app.logger.info('Calling after_request() for the Flask application...')
+    #     return response
 
 #     @app.teardown_request
 #     def app_teardown_request(error=None):
@@ -21,6 +22,20 @@ import os
 #     @app.teardown_appcontext
 #     def app_teardown_appcontext(error=None):
 #         app.logger.info('Calling teardown_appcontext() for the Flask application...')
+
+def register_error_pages(app):
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html'), 404
+    
+    @app.errorhandler(405)
+    def method_not_allowed(e):
+        return render_template('405.html'), 405
+    
+    @app.errorhandler(403)
+    def page_forbidden(e):
+        return render_template('403.html'), 403
 
 def configure_logging(app):
     # Logging Configuration
@@ -61,5 +76,6 @@ def create_app():
 
     register_blueprints(app)
     configure_logging(app)
+    register_error_pages(app)
     # register_app_callbacks(app)
     return app
